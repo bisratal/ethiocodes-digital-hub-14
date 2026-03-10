@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Globe, Smartphone, Code, Cloud, Palette, Layers, Star, Quote } from "lucide-react";
+import { ArrowRight, Globe, Smartphone, Code, Cloud, Palette, Layers, Quote, CheckCircle, Users, Briefcase, Award, Zap, Shield, Clock } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import NewsletterForm from "@/components/NewsletterForm";
 import { services, portfolioProjects, testimonials } from "@/data/content";
@@ -22,6 +22,27 @@ const fadeUp = {
     transition: { delay: i * 0.1, duration: 0.5 },
   }),
 };
+
+const stats = [
+  { value: "150+", label: "Projects Delivered", icon: <Briefcase size={24} /> },
+  { value: "50+", label: "Happy Clients", icon: <Users size={24} /> },
+  { value: "15+", label: "Team Members", icon: <Award size={24} /> },
+  { value: "99.9%", label: "Uptime Guarantee", icon: <Zap size={24} /> },
+];
+
+const processSteps = [
+  { step: "01", title: "Discovery", description: "We analyze your requirements, goals, and market landscape to define the perfect strategy." },
+  { step: "02", title: "Design", description: "Our designers create intuitive wireframes and pixel-perfect UI mockups for your approval." },
+  { step: "03", title: "Development", description: "Our engineers build your solution using agile methodology with regular progress updates." },
+  { step: "04", title: "Launch & Support", description: "We deploy, monitor, and provide ongoing support to ensure long-term success." },
+];
+
+const whyChooseUs = [
+  { icon: <Shield size={22} />, title: "Enterprise Security", description: "SOC 2 compliant practices with end-to-end encryption and regular audits." },
+  { icon: <Zap size={22} />, title: "Fast Delivery", description: "Agile sprints with 2-week release cycles keep your project on track." },
+  { icon: <Clock size={22} />, title: "24/7 Support", description: "Round-the-clock technical support with guaranteed response times." },
+  { icon: <CheckCircle size={22} />, title: "Quality Assured", description: "Comprehensive testing with 95%+ code coverage on every project." },
+];
 
 const Index = () => {
   return (
@@ -66,6 +87,30 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Stats Bar */}
+      <section className="bg-card border-b border-border">
+        <div className="container-narrow py-12 px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                className="text-center"
+              >
+                <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-secondary mx-auto mb-3">
+                  {s.icon}
+                </div>
+                <p className="text-3xl font-extrabold text-foreground">{s.value}</p>
+                <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Preview */}
       <section className="section-padding bg-muted">
         <div className="container-narrow">
@@ -97,11 +142,52 @@ const Index = () => {
               </motion.div>
             ))}
           </div>
+          <div className="text-center mt-10">
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-secondary hover:underline"
+            >
+              Explore All Services <ArrowRight size={16} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* How We Work */}
+      <section className="section-padding">
+        <div className="container-narrow">
+          <SectionHeading
+            tag="Our Process"
+            title="How We Work"
+            description="A proven, transparent process that delivers results on time and within budget."
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {processSteps.map((step, i) => (
+              <motion.div
+                key={step.step}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="relative text-center"
+              >
+                <div className="text-5xl font-extrabold text-accent mb-4">{step.step}</div>
+                <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
+                {i < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-8 -right-4 w-8">
+                    <ArrowRight size={20} className="text-border" />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Portfolio Highlights */}
-      <section className="section-padding">
+      <section className="section-padding bg-muted">
         <div className="container-narrow">
           <SectionHeading
             tag="Our Work"
@@ -147,6 +233,36 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Why Choose Us */}
+      <section className="section-padding">
+        <div className="container-narrow">
+          <SectionHeading
+            tag="Why EthioCodes"
+            title="Why Choose Us"
+            description="We combine technical excellence with deep industry knowledge to deliver exceptional results."
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {whyChooseUs.map((item, i) => (
+              <motion.div
+                key={item.title}
+                custom={i}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                className="p-6 rounded-xl bg-card shadow-card text-center"
+              >
+                <div className="w-12 h-12 rounded-xl bg-accent flex items-center justify-center text-secondary mx-auto mb-4">
+                  {item.icon}
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="section-padding bg-muted">
         <div className="container-narrow">
@@ -177,6 +293,18 @@ const Index = () => {
                   </div>
                 </div>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted By */}
+      <section className="py-16 px-4">
+        <div className="container-narrow text-center">
+          <p className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-8">Trusted by companies across industries</p>
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center opacity-50">
+            {["TechVentures Inc.", "MedConnect Health", "AgroLink Africa", "LogiTrack GmbH", "EduSpark", "FinFlow"].map((name) => (
+              <span key={name} className="text-lg font-bold text-foreground/40">{name}</span>
             ))}
           </div>
         </div>
