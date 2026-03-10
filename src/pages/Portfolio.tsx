@@ -1,4 +1,8 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 import { portfolioProjects } from "@/data/content";
 
 const fadeUp = {
@@ -9,50 +13,135 @@ const fadeUp = {
   }),
 };
 
-const Portfolio = () => (
-  <main className="pt-16">
-    <section className="gradient-hero section-padding">
-      <div className="container-narrow text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-primary-foreground mb-4">Our Portfolio</h1>
-        <p className="text-primary-foreground/70 max-w-xl mx-auto">
-          Explore the projects we've delivered for clients across various industries.
-        </p>
-      </div>
-    </section>
+const industries = ["All", ...Array.from(new Set(portfolioProjects.map((p) => p.industry)))];
 
-    <section className="section-padding">
-      <div className="container-narrow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {portfolioProjects.map((p, i) => (
-          <motion.div
-            key={p.id}
-            custom={i}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-            className="rounded-xl overflow-hidden bg-card shadow-card hover:shadow-elevated transition-shadow group cursor-pointer"
-          >
-            <div className="h-48 gradient-primary flex items-center justify-center relative overflow-hidden">
-              <span className="text-primary-foreground/30 text-sm font-medium">{p.industry}</span>
-              <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/10 transition-colors" />
-            </div>
-            <div className="p-6">
-              <span className="text-xs font-medium text-secondary">{p.industry}</span>
-              <h3 className="font-semibold text-foreground mt-1 mb-2 text-lg">{p.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{p.description}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {p.technologies.map((t) => (
-                  <span key={t} className="px-2 py-0.5 rounded text-xs bg-accent text-accent-foreground">
-                    {t}
-                  </span>
-                ))}
+const stats = [
+  { value: "6+", label: "Industries Served" },
+  { value: "150+", label: "Projects Completed" },
+  { value: "98%", label: "Client Satisfaction" },
+  { value: "12", label: "Countries Reached" },
+];
+
+const Portfolio = () => {
+  const [activeFilter, setActiveFilter] = useState("All");
+  const filtered = activeFilter === "All" ? portfolioProjects : portfolioProjects.filter((p) => p.industry === activeFilter);
+
+  return (
+    <main className="pt-16">
+      {/* Hero */}
+      <section className="gradient-hero section-padding">
+        <div className="container-narrow text-center">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-secondary/20 text-secondary mb-4">
+            Our Work
+          </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-primary-foreground mb-4">Our Portfolio</h1>
+          <p className="text-primary-foreground/70 max-w-2xl mx-auto">
+            Explore the projects we've delivered for clients across various industries — from fintech to agriculture.
+          </p>
+        </div>
+      </section>
+
+      {/* Stats */}
+      <section className="bg-card border-b border-border">
+        <div className="container-narrow py-10 px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            {stats.map((s) => (
+              <div key={s.label}>
+                <p className="text-3xl font-extrabold text-foreground">{s.value}</p>
+                <p className="text-sm text-muted-foreground mt-1">{s.label}</p>
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Filters + Grid */}
+      <section className="section-padding">
+        <div className="container-narrow">
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-10">
+            {industries.map((ind) => (
+              <button
+                key={ind}
+                onClick={() => setActiveFilter(ind)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  activeFilter === ind
+                    ? "gradient-accent text-secondary-foreground"
+                    : "bg-accent text-accent-foreground hover:bg-accent/80"
+                }`}
+              >
+                {ind}
+              </button>
+            ))}
+          </div>
+
+          {/* Projects Grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeFilter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {filtered.map((p, i) => (
+                <motion.div
+                  key={p.id}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={fadeUp}
+                  className="rounded-xl overflow-hidden bg-card shadow-card hover:shadow-elevated transition-shadow group cursor-pointer"
+                >
+                  <div className="h-48 gradient-primary flex items-center justify-center relative overflow-hidden">
+                    <span className="text-primary-foreground/30 text-sm font-medium">{p.industry}</span>
+                    <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/10 transition-colors" />
+                  </div>
+                  <div className="p-6">
+                    <span className="text-xs font-medium text-secondary">{p.industry}</span>
+                    <h3 className="font-semibold text-foreground mt-1 mb-2 text-lg">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{p.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {p.technologies.map((t) => (
+                        <span key={t} className="px-2 py-0.5 rounded text-xs bg-accent text-accent-foreground">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="section-padding gradient-hero text-center">
+        <div className="container-narrow">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+              Want to See Your Project Here?
+            </h2>
+            <p className="text-primary-foreground/70 mb-8 max-w-lg mx-auto">
+              Let's build something remarkable together.
+            </p>
+            <Link
+              to="/request"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm gradient-accent text-secondary-foreground hover:opacity-90 transition-opacity"
+            >
+              Start Your Project <ArrowRight size={16} />
+            </Link>
           </motion.div>
-        ))}
-      </div>
-    </section>
-  </main>
-);
+        </div>
+      </section>
+    </main>
+  );
+};
 
 export default Portfolio;
