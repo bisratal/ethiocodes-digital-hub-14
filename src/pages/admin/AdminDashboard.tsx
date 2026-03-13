@@ -92,7 +92,7 @@ const AdminDashboard = () => {
                     <stat.icon className={`h-4 w-4 ${stat.color}`} />
                   </div>
                   {stat.trend === "up" && (
-                    <span className="flex items-center text-xs font-medium text-emerald-600">
+                    <span className="flex items-center text-xs font-medium text-secondary">
                       <ArrowUpRight className="h-3 w-3 mr-0.5" />
                       {stat.change}
                     </span>
