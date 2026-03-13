@@ -14,6 +14,19 @@ import Contact from "./pages/Contact";
 import ProjectRequest from "./pages/ProjectRequest";
 import NotFound from "./pages/NotFound";
 
+// Admin
+import ProtectedRoute from "./components/admin/ProtectedRoute";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminBlog from "./pages/admin/AdminBlog";
+import AdminPortfolio from "./pages/admin/AdminPortfolio";
+import AdminServices from "./pages/admin/AdminServices";
+import AdminTeam from "./pages/admin/AdminTeam";
+import AdminTestimonials from "./pages/admin/AdminTestimonials";
+import AdminLeads from "./pages/admin/AdminLeads";
+import AdminMedia from "./pages/admin/AdminMedia";
+import AdminSettings from "./pages/admin/AdminSettings";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -22,18 +35,101 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/portfolio" element={<Portfolio />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/request" element={<ProjectRequest />} />
+          {/* Public routes */}
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <Index />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/services"
+            element={
+              <>
+                <Navbar />
+                <Services />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/portfolio"
+            element={
+              <>
+                <Navbar />
+                <Portfolio />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <>
+                <Navbar />
+                <Blog />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/team"
+            element={
+              <>
+                <Navbar />
+                <Team />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <>
+                <Navbar />
+                <Contact />
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/request"
+            element={
+              <>
+                <Navbar />
+                <ProjectRequest />
+                <Footer />
+              </>
+            }
+          />
+
+          {/* Admin routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminDashboard />} />
+            <Route path="blog" element={<AdminBlog />} />
+            <Route path="portfolio" element={<AdminPortfolio />} />
+            <Route path="services" element={<AdminServices />} />
+            <Route path="team" element={<AdminTeam />} />
+            <Route path="testimonials" element={<AdminTestimonials />} />
+            <Route path="leads" element={<AdminLeads />} />
+            <Route path="media" element={<AdminMedia />} />
+            <Route path="settings" element={<AdminSettings />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
