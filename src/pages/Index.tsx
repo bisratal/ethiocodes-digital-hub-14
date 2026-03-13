@@ -49,41 +49,143 @@ const Index = () => {
     <main>
       {/* Hero */}
       <section className="gradient-hero min-h-[90vh] flex items-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 right-20 w-72 h-72 rounded-full bg-secondary blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-secondary blur-3xl" />
-        </div>
-        <div className="container-narrow relative z-10 py-24 px-4">
+        {/* Animated background orbs */}
+        <div className="absolute inset-0">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="max-w-2xl"
-          >
-            <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-secondary/20 text-secondary mb-6">
-              Software Development Company
-            </span>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-primary-foreground leading-tight mb-6">
-              We Build <span className="text-secondary">Digital Solutions</span> That Drive Growth
-            </h1>
-            <p className="text-lg text-primary-foreground/70 mb-8 max-w-lg">
-              EthioCodes is a full-service software development company delivering modern, scalable solutions for businesses across Africa and beyond.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm gradient-accent text-secondary-foreground hover:opacity-90 transition-opacity"
+            animate={{ x: [0, 30, 0], y: [0, -20, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-20 right-[15%] w-72 h-72 rounded-full bg-secondary/15 blur-3xl"
+          />
+          <motion.div
+            animate={{ x: [0, -20, 0], y: [0, 30, 0], scale: [1, 1.15, 1] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-20 left-[10%] w-96 h-96 rounded-full bg-secondary/10 blur-3xl"
+          />
+          <motion.div
+            animate={{ x: [0, 15, 0], y: [0, 15, 0] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 left-1/2 w-64 h-64 rounded-full bg-secondary/5 blur-3xl"
+          />
+        </div>
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, hsl(195, 80%, 48%) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+
+        <div className="container-narrow relative z-10 py-24 px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+            >
+              <motion.span
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-secondary/20 text-secondary mb-6 border border-secondary/20"
               >
-                View Services <ArrowRight size={16} />
-              </Link>
-              <Link
-                to="/request"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm border border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 transition-colors"
+                <span className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                Software Development Company
+              </motion.span>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-primary-foreground leading-[1.1] mb-6">
+                We Build{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-cyan-300">
+                  Digital Solutions
+                </span>{" "}
+                That Drive Growth
+              </h1>
+              <p className="text-lg text-primary-foreground/60 mb-8 max-w-lg leading-relaxed">
+                EthioCodes is a full-service software development company delivering modern, scalable solutions for businesses across Africa and beyond.
+              </p>
+              <div className="flex flex-wrap gap-4 mb-10">
+                <Link
+                  to="/services"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm gradient-accent text-secondary-foreground hover:opacity-90 transition-all hover:scale-105 shadow-lg shadow-secondary/20"
+                >
+                  View Services <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/request"
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-sm border border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 transition-all hover:scale-105"
+                >
+                  Request a Project
+                </Link>
+              </div>
+              {/* Trust indicators */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+                className="flex items-center gap-6 text-primary-foreground/40"
               >
-                Request a Project
-              </Link>
-            </div>
-          </motion.div>
+                <div className="flex -space-x-2">
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full border-2 border-primary bg-gradient-to-br from-secondary/60 to-secondary/20 flex items-center justify-center text-[10px] font-bold text-secondary-foreground">
+                      {String.fromCharCode(65 + i)}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-sm">
+                  <span className="text-secondary font-semibold">50+</span> happy clients worldwide
+                </p>
+              </motion.div>
+            </motion.div>
+
+            {/* Right side — floating code/tech card */}
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.7 }}
+              className="hidden lg:block"
+            >
+              <div className="relative">
+                <div className="absolute -inset-4 bg-gradient-to-r from-secondary/20 to-cyan-400/10 rounded-3xl blur-xl" />
+                <div className="relative bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-6 space-y-4">
+                  {/* Terminal-like header */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-3 h-3 rounded-full bg-destructive/60" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/60" />
+                    <span className="ml-2 text-xs text-primary-foreground/30 font-mono">ethiocodes.dev</span>
+                  </div>
+                  {/* Animated code lines */}
+                  {[
+                    { color: "text-secondary", text: "const", rest: " project = await EthioCodes" },
+                    { color: "text-cyan-300", text: "  .design", rest: "(yourVision)" },
+                    { color: "text-cyan-300", text: "  .develop", rest: "(withExcellence)" },
+                    { color: "text-cyan-300", text: "  .deploy", rest: "(toProduction);" },
+                    { color: "text-green-400", text: "// ", rest: "150+ projects delivered ✓" },
+                  ].map((line, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.7 + i * 0.15, duration: 0.4 }}
+                      className="font-mono text-sm"
+                    >
+                      <span className={line.color}>{line.text}</span>
+                      <span className="text-primary-foreground/50">{line.rest}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Floating badges */}
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-4 -right-4 px-3 py-1.5 rounded-lg bg-secondary/90 text-secondary-foreground text-xs font-bold shadow-lg"
+                >
+                  React · TypeScript
+                </motion.div>
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -bottom-3 -left-3 px-3 py-1.5 rounded-lg bg-accent text-accent-foreground text-xs font-bold shadow-lg border border-border"
+                >
+                  99.9% Uptime
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
