@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTheme } from "@/hooks/use-theme";
 
 const links = [
   { to: "/", label: "Home" },
@@ -15,11 +16,12 @@ const links = [
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container-narrow flex items-center justify-between h-16 px-4">
-        <Link to="/" className="text-xl font-bold text-primary tracking-tight">
+        <Link to="/" className="text-xl font-bold text-foreground tracking-tight">
           Ethio<span className="text-secondary">Codes</span>
         </Link>
 
@@ -31,29 +33,45 @@ const Navbar = () => {
               to={l.to}
               className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                 location.pathname === l.to
-                  ? "text-primary bg-accent"
-                  : "text-muted-foreground hover:text-primary hover:bg-accent"
+                  ? "text-foreground bg-accent"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
               }`}
             >
               {l.label}
             </Link>
           ))}
+          <button
+            onClick={toggleTheme}
+            className="ml-2 p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
           <Link
             to="/request"
-            className="ml-3 px-4 py-2 rounded-lg text-sm font-semibold gradient-accent text-secondary-foreground transition-transform hover:scale-105"
+            className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold gradient-accent text-secondary-foreground transition-transform hover:scale-105"
           >
             Request a Project
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden p-2 text-foreground"
-          onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* Mobile */}
+        <div className="md:hidden flex items-center gap-1">
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <button
+            className="p-2 text-foreground"
+            onClick={() => setOpen(!open)}
+            aria-label="Toggle menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -73,8 +91,8 @@ const Navbar = () => {
                   onClick={() => setOpen(false)}
                   className={`px-3 py-2.5 rounded-md text-sm font-medium transition-colors ${
                     location.pathname === l.to
-                      ? "text-primary bg-accent"
-                      : "text-muted-foreground hover:text-primary"
+                      ? "text-foreground bg-accent"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {l.label}
