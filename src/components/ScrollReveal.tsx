@@ -14,8 +14,8 @@ interface Props {
 }
 
 const getVariants = (direction: Direction, duration: number): Variants => {
-  const hidden: Record<string, unknown> = { opacity: 0 };
-  const visible: Record<string, unknown> = { opacity: 1, transition: { duration, ease: [0.25, 0.1, 0.25, 1] } };
+  const hidden: Record<string, number> = { opacity: 0 };
+  const visible: Record<string, number> = { opacity: 1 };
 
   switch (direction) {
     case "up":
