@@ -116,7 +116,10 @@ export function AdminSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors w-full">
+              <button
+                onClick={() => { sessionStorage.removeItem("admin_demo_auth"); window.location.href = "/"; }}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors w-full"
+              >
                 <LogOut className="h-4 w-4 shrink-0" />
                 {!collapsed && <span>Log Out</span>}
               </button>
