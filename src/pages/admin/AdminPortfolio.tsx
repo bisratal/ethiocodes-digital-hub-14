@@ -1,17 +1,47 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, Search, Edit, Trash2, Eye } from "lucide-react";
+import { Plus, Search, Edit, Trash2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { portfolioProjects } from "@/data/content";
+import { Textarea } from "@/components/ui/textarea";
+import { portfolioProjects as initialProjects } from "@/data/content";
 import { toast } from "sonner";
+import AdminFormDialog from "@/components/admin/AdminFormDialog";
+
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  technologies: string[];
+  industry: string;
+  image: string;
+}
+
+const empty: Project = { id: "", title: "", description: "", technologies: [], industry: "", image: "" };
 
 const AdminPortfolio = () => {
+  const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [search, setSearch] = useState("");
-  const filtered = portfolioProjects.filter((p) =>
-    p.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [editing, setEditing] = useState<Project>(empty);
+  const [deleteTarget, setDeleteTarget] = useState("");
+  const [techInput, setTechInput] = useState("");
+
+  const filtered = projects.filter((p) => p.title.toLowerCase().includes(search.toLowerCase()));
+
+  const openCreate = () => { setEditing({ ...empty, id: `proj-${Date.now()}` }); setTechInput(""); setDialogOpen(true); };
+  const openEdit = (p: Project) => { setEditing({ ...p }); setTechInput(p.technologies.join(", ")); setDialogOpen(true); };
+
+  const handleSave = () => {
+    const item = { ...editing, technologies: techInput.split(",").map((t) => t.trim()).filter(Boolean) };
+    const exists = projects.find((p) => p.id === item.id);
+    if (exists) { setProjects(projects.map((p) => (p.id === item.id ? item : p))); toast.success("Project updated"); }
+    else { setProjects([item, ...projects]); toast.success("Project created"); }
+  };
+
+  const handleDelete = () => { setProjects(projects.filter((p) => p.id !== deleteTarget)); toast.success("Project deleted"); };
 
   return (
     <div className="space-y-6 max-w-5xl">
@@ -20,9 +50,7 @@ const AdminPortfolio = () => {
           <h1 className="text-2xl font-bold text-foreground">Portfolio</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage your showcase projects.</p>
         </div>
-        <Button className="font-semibold" onClick={() => toast.info("Coming soon")}>
-          <Plus className="h-4 w-4 mr-2" /> Add Project
-        </Button>
+        <Button className="font-semibold" onClick={openCreate}><Plus className="h-4 w-4 mr-2" /> Add Project</Button>
       </div>
 
       <div className="relative">
@@ -44,9 +72,8 @@ const AdminPortfolio = () => {
                   ))}
                 </div>
                 <div className="flex items-center gap-1 mt-3 pt-3 border-t border-border">
-                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground"><Eye className="h-3 w-3 mr-1" />View</Button>
-                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground"><Edit className="h-3 w-3 mr-1" />Edit</Button>
-                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground hover:text-destructive" onClick={() => toast.info("Coming with backend")}>
+                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground" onClick={() => openEdit(project)}><Edit className="h-3 w-3 mr-1" />Edit</Button>
+                  <Button variant="ghost" size="sm" className="h-7 text-xs text-muted-foreground hover:text-destructive" onClick={() => { setDeleteTarget(project.id); setDeleteOpen(true); }}>
                     <Trash2 className="h-3 w-3 mr-1" />Delete
                   </Button>
                 </div>
@@ -55,6 +82,17 @@ const AdminPortfolio = () => {
           </motion.div>
         ))}
       </div>
+
+      <AdminFormDialog open={dialogOpen} onOpenChange={setDialogOpen} title={projects.find((p) => p.id === editing.id) ? "Edit Project" : "New Project"} onSubmit={handleSave}>
+        <div><label className="text-sm font-medium text-foreground">Title</label><Input className="mt-1.5" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} /></div>
+        <div><label className="text-sm font-medium text-foreground">Description</label><Textarea className="mt-1.5" rows={3} value={editing.description} onChange={(e) => setEditing({ ...editing, description: e.target.value })} /></div>
+        <div><label className="text-sm font-medium text-foreground">Industry</label><Input className="mt-1.5" value={editing.industry} onChange={(e) => setEditing({ ...editing, industry: e.target.value })} /></div>
+        <div><label className="text-sm font-medium text-foreground">Technologies (comma separated)</label><Input className="mt-1.5" value={techInput} onChange={(e) => setTechInput(e.target.value)} /></div>
+      </AdminFormDialog>
+
+      <AdminFormDialog open={deleteOpen} onOpenChange={setDeleteOpen} title="Delete Project" onSubmit={handleDelete} submitLabel="Delete" destructive>
+        <p className="text-sm text-muted-foreground">Are you sure you want to delete this project? This action cannot be undone.</p>
+      </AdminFormDialog>
     </div>
   );
 };
