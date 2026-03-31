@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Mail, Phone, MapPin, Clock, MessageSquare, ArrowRight } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import ScrollReveal from "@/components/ScrollReveal";
+import api from "@/lib/api"; // 🔥 added
 
 const faqs = [
   { q: "How long does a typical project take?", a: "Timelines vary by scope. A standard web app takes 8–16 weeks, while an MVP can be ready in 4–6 weeks. We'll provide a detailed timeline during the proposal phase." },
@@ -16,15 +17,30 @@ const faqs = [
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false); // 🔥 added
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!form.name || !form.email || !form.message) {
       toast.error("Please fill in all required fields.");
       return;
     }
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setForm({ name: "", email: "", company: "", message: "" });
+
+    try {
+      setLoading(true);
+
+      // 🔥 send to backend
+      await api.post("/leads", form);
+
+      toast.success("Message sent successfully! We'll get back to you soon.");
+      setForm({ name: "", email: "", company: "", message: "" });
+    } catch (err: any) {
+      console.error(err);
+      toast.error("Failed to send message. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -85,6 +101,7 @@ const Contact = () => {
               className="bg-card rounded-xl shadow-card p-8 space-y-5 dark:border dark:border-border"
             >
               <h3 className="text-lg font-bold text-foreground mb-2">Send Us a Message</h3>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">Name *</label>
@@ -95,16 +112,23 @@ const Contact = () => {
                   <input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none" required />
                 </div>
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">Company</label>
                 <input type="text" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none" />
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-foreground mb-1.5">Message *</label>
                 <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={5} placeholder="Tell us about your project or question..." className="w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground text-sm focus:ring-2 focus:ring-secondary focus:border-transparent outline-none resize-none" required />
               </div>
-              <button type="submit" className="w-full px-6 py-3 rounded-lg font-semibold text-sm gradient-accent text-secondary-foreground hover:opacity-90 transition-opacity">
-                Send Message
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full px-6 py-3 rounded-lg font-semibold text-sm gradient-accent text-secondary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+              >
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           </ScrollReveal>

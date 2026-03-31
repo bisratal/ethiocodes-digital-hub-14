@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const { sequelize } = require("../../config/db");
+const sequelize = require("../../config/db");
 
 const User = sequelize.define("User", {
   name: {
@@ -9,15 +9,12 @@ const User = sequelize.define("User", {
   email: {
     type: DataTypes.STRING,
     unique: true,
-    allowNull: false,
   },
   password_hash: {
     type: DataTypes.STRING,
-    allowNull: false,
   },
   role: {
     type: DataTypes.ENUM("Admin", "Editor"),
-    allowNull: false,
   },
   status: {
     type: DataTypes.BOOLEAN,
@@ -25,8 +22,10 @@ const User = sequelize.define("User", {
   },
 }, {
   timestamps: true,
+
+  // 🔥 THIS IS THE FIX
   createdAt: "created_at",
-  updatedAt: "updated_at",
+  updatedAt: "updated_at"
 });
 
 module.exports = User;

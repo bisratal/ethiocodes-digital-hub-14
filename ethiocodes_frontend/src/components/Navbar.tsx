@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/hooks/use-theme";
+import logo from "../data/logo.jpg"; // adjust path if needed
 
 const links = [
   { to: "/", label: "Home" },
@@ -21,9 +22,13 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container-narrow flex items-center justify-between h-16 px-4">
-        <Link to="/" className="text-xl font-bold text-foreground tracking-tight">
-          Ethio<span className="text-secondary">Codes</span>
-        </Link>
+        <Link to="/" className="flex items-center">
+  <img
+  src={logo}
+  alt="EthioCodes Logo"
+  className="h-10 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
+/>
+</Link>
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-1">

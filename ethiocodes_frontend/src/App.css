@@ -40,3 +40,20 @@
 .read-the-docs {
   color: #888;
 }
+/* Add to your global CSS file */
+.fixed {
+  position: fixed;
+}
+.inset-0 {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.z-50 {
+  z-index: 50;
+}
+.bg-black\/50 {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* Add any other missing styles as needed */
