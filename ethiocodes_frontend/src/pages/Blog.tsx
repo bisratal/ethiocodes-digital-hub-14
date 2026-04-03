@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Calendar, User, ArrowRight, Search } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import NewsletterForm from "@/components/NewsletterForm";
-import api from "../lib/api";
+import {api} from "../lib/api";
 
 const Blog = () => {
   const [posts, setPosts] = useState<any[]>([]); // 🔥 dynamic posts

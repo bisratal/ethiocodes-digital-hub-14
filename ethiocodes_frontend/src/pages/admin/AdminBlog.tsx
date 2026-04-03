@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import AdminFormDialog from "@/components/admin/AdminFormDialog";
-import api from "@/lib/api";
+import { api } from "@/lib/api";
 
 interface BlogPost {
   id: number;
