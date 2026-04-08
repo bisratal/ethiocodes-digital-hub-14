@@ -51,13 +51,21 @@ const Team = () => (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamMembers.map((m, i) => (
             <ScrollReveal key={m.name} direction={i % 3 === 0 ? "right" : i % 3 === 1 ? "up" : "left"} delay={i * 0.08}>
-              <div className="rounded-xl bg-card shadow-card hover:shadow-elevated transition-all p-6 text-center group dark:border dark:border-border dark:hover:border-glow">
-                <div className="w-24 h-24 rounded-full gradient-accent mx-auto mb-4 flex items-center justify-center text-secondary-foreground text-2xl font-bold group-hover:scale-110 transition-transform dark:glow-secondary">
-                  {m.name.split(" ").map(n => n[0]).join("")}
+              <div className="rounded-xl bg-card shadow-card hover:shadow-elevated transition-all overflow-hidden group dark:border dark:border-border dark:hover:border-glow">
+                <div className="h-56 overflow-hidden bg-gradient-to-br from-secondary/20 to-secondary/5">
+                  {m.photo ? (
+                    <img src={m.photo} alt={m.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  ) : (
+                    <div className="w-full h-full gradient-accent flex items-center justify-center text-secondary-foreground text-4xl font-bold">
+                      {m.name.split(" ").map(n => n[0]).join("")}
+                    </div>
+                  )}
                 </div>
-                <h3 className="font-semibold text-foreground text-lg">{m.name}</h3>
-                <p className="text-sm text-secondary font-medium mb-3">{m.role}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{m.bio}</p>
+                <div className="p-6 text-center">
+                  <h3 className="font-semibold text-foreground text-lg">{m.name}</h3>
+                  <p className="text-sm text-secondary font-medium mb-3">{m.role}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{m.bio}</p>
+                </div>
               </div>
             </ScrollReveal>
           ))}

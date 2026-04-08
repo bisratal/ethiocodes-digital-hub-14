@@ -79,9 +79,15 @@ const Portfolio = () => {
                   transition={{ delay: i * 0.08, duration: 0.5 }}
                   className="rounded-xl overflow-hidden bg-card shadow-card hover:shadow-elevated transition-all group cursor-pointer dark:border dark:border-border dark:hover:border-glow"
                 >
-                  <div className="h-48 gradient-primary flex items-center justify-center relative overflow-hidden">
-                    <span className="text-primary-foreground/30 text-sm font-medium">{p.industry}</span>
-                    <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/10 transition-colors" />
+                  <div className="h-48 bg-gradient-to-br from-secondary/20 to-secondary/5 flex items-center justify-center relative overflow-hidden">
+                    {p.image ? (
+                      <img src={p.image} alt={p.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <>
+                        <span className="text-primary-foreground/30 text-sm font-medium">{p.industry}</span>
+                        <div className="absolute inset-0 bg-secondary/0 group-hover:bg-secondary/10 transition-colors" />
+                      </>
+                    )}
                   </div>
                   <div className="p-6">
                     <span className="text-xs font-medium text-secondary">{p.industry}</span>

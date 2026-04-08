@@ -56,7 +56,7 @@ export const portfolioProjects = [
     description: "A real-time financial analytics dashboard for a leading Ethiopian bank, handling over 100K daily transactions.",
     technologies: ["React", "Node.js", "PostgreSQL", "D3.js"],
     industry: "Financial Services",
-    image: "",
+    image: "/fintech-dashboard.jpg",
   },
   {
     id: "ecommerce-platform",
@@ -64,7 +64,7 @@ export const portfolioProjects = [
     description: "A multi-vendor marketplace enabling local businesses to sell products across East Africa with integrated mobile money payments.",
     technologies: ["Next.js", "Stripe", "Supabase", "React Native"],
     industry: "Retail",
-    image: "",
+    image: "/ecommerce-platform.jpg",
   },
   {
     id: "healthcare-app",
@@ -72,7 +72,7 @@ export const portfolioProjects = [
     description: "A comprehensive hospital management system with patient records, appointment scheduling, and telemedicine features.",
     technologies: ["React", "Python", "PostgreSQL", "Docker"],
     industry: "Healthcare",
-    image: "",
+    image: "/healthcare-system.jpg",
   },
   {
     id: "logistics-tracker",
@@ -80,7 +80,7 @@ export const portfolioProjects = [
     description: "End-to-end supply chain visibility platform with real-time GPS tracking and automated dispatch management.",
     technologies: ["React Native", "Node.js", "MongoDB", "Google Maps"],
     industry: "Logistics",
-    image: "",
+    image: "/logistics-tracker.jpg",
   },
   {
     id: "education-portal",
@@ -88,7 +88,7 @@ export const portfolioProjects = [
     description: "An interactive e-learning platform serving 50K+ students with live classes, quizzes, and progress tracking.",
     technologies: ["Next.js", "WebRTC", "PostgreSQL", "Redis"],
     industry: "Education",
-    image: "",
+    image: "/education-portal.jpg",
   },
   {
     id: "agritech-platform",
@@ -96,7 +96,7 @@ export const portfolioProjects = [
     description: "Smart agriculture platform connecting farmers with markets, weather data, and crop management tools.",
     technologies: ["React", "Python", "IoT", "AWS"],
     industry: "Agriculture",
-    image: "",
+    image: "/agritech-platform.jpg",
   },
 ];
 
@@ -105,37 +105,37 @@ export const teamMembers = [
     name: "Abebe Kebede",
     role: "CEO & Founder",
     bio: "15+ years of experience in software engineering and business leadership. Passionate about building Ethiopia's tech ecosystem.",
-    photo: "",
+    photo: "/abebe-kebede.jpg",
   },
   {
     name: "Tigist Haile",
     role: "CTO",
     bio: "Full-stack architect with expertise in cloud infrastructure and distributed systems. Former Google engineer.",
-    photo: "",
+    photo: "/tigist-haile.jpg",
   },
   {
     name: "Dawit Mekonnen",
     role: "Lead Designer",
     bio: "Award-winning UI/UX designer creating intuitive digital experiences. Advocates for accessible design.",
-    photo: "",
+    photo: "/dawit-mekonnen.jpg",
   },
   {
     name: "Sara Tadesse",
     role: "Senior Developer",
     bio: "React and mobile specialist building performant, user-centric applications. Open source contributor.",
-    photo: "",
+    photo: "/sara-tadesse.jpg",
   },
   {
     name: "Yonas Bekele",
     role: "DevOps Engineer",
     bio: "Cloud infrastructure expert ensuring 99.9% uptime. Kubernetes and Terraform certified.",
-    photo: "",
+    photo: "/yonas-bekele.jpg",
   },
   {
     name: "Hana Girma",
     role: "Project Manager",
     bio: "Agile practitioner delivering projects on time and budget. PMP certified with startup experience.",
-    photo: "",
+    photo: "/hana-girma.jpg",
   },
 ];
 
@@ -144,25 +144,25 @@ export const testimonials = [
     name: "Michael Chen",
     company: "TechVentures Inc.",
     quote: "EthioCodes delivered our fintech platform ahead of schedule. Their technical expertise and communication were outstanding.",
-    photo: "",
+    photo: "/michael-chen.jpg",
   },
   {
     name: "Fatima Al-Rashid",
     company: "MedConnect Health",
     quote: "The healthcare management system they built transformed our hospital operations. Patient satisfaction increased by 40%.",
-    photo: "",
+    photo: "/fatima-al-rashid.jpg",
   },
   {
     name: "James Okafor",
     company: "AgroLink Africa",
     quote: "Working with EthioCodes was seamless. They understood our vision and turned it into a powerful agritech platform.",
-    photo: "",
+    photo: "/james-okafor.jpg",
   },
   {
     name: "Lisa Müller",
     company: "LogiTrack GmbH",
     quote: "Their logistics platform reduced our delivery times by 30%. The real-time tracking feature is a game-changer.",
-    photo: "",
+    photo: "/lisa-muller.jpg",
   },
 ];
 
@@ -174,7 +174,7 @@ export const blogPosts = [
     date: "2024-12-15",
     tags: ["React", "Performance", "Frontend"],
     excerpt: "Explore advanced techniques for optimizing React applications, from code splitting to server components.",
-    image: "",
+    image: "/education-portal.jpg",
   },
   {
     id: "cloud-migration-guide",
@@ -183,7 +183,7 @@ export const blogPosts = [
     date: "2024-11-28",
     tags: ["Cloud", "AWS", "DevOps"],
     excerpt: "Step-by-step guide to migrating your infrastructure to the cloud without downtime.",
-    image: "",
+    image: "/fintech-dashboard.jpg",
   },
   {
     id: "mobile-first-design",
@@ -192,7 +192,7 @@ export const blogPosts = [
     date: "2024-11-10",
     tags: ["Design", "Mobile", "UX"],
     excerpt: "Why mobile-first design matters and how to implement it effectively in your projects.",
-    image: "",
+    image: "/ecommerce-platform.jpg",
   },
   {
     id: "typescript-best-practices",
@@ -201,7 +201,7 @@ export const blogPosts = [
     date: "2024-10-22",
     tags: ["TypeScript", "Architecture", "Backend"],
     excerpt: "Essential TypeScript patterns and practices for building maintainable enterprise applications.",
-    image: "",
+    image: "/healthcare-system.jpg",
   },
   {
     id: "african-tech-ecosystem",
@@ -210,7 +210,7 @@ export const blogPosts = [
     date: "2024-10-05",
     tags: ["Industry", "Africa", "Startups"],
     excerpt: "How African tech companies are shaping the global software development landscape.",
-    image: "",
+    image: "/agritech-platform.jpg",
   },
   {
     id: "api-design-patterns",
@@ -219,6 +219,6 @@ export const blogPosts = [
     date: "2024-09-18",
     tags: ["API", "Backend", "Architecture"],
     excerpt: "Proven API design patterns for building robust, scalable backend services.",
-    image: "",
+    image: "/logistics-tracker.jpg",
   },
 ];
