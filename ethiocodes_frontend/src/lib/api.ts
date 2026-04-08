@@ -69,5 +69,8 @@ export const getToken = (): string | null => {
   return localStorage.getItem("token");
 };
 
-// Named export instead of default
+// Default export for convenience
+export default api;
+
+// Named export for flexibility
 export { api };
